@@ -5,7 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,9 +26,8 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Mic
-import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.outlined.AddAPhoto
+import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
+import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -84,16 +83,27 @@ fun ChatScreen(navController: NavHostController) {
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
-    Scaffold(topBar = {
-        CenterAlignedTopAppBar(
-            title = {
-                Text(
-                    text = "Chat with Elsyian AI",
-                    fontFamily = inter
-                )
-            }
-        )
-    }
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = "Chat with Elsyian AI",
+                        fontFamily = inter
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.ArrowBackIos,
+                            contentDescription = null,
+                        )
+                    }
+                }
+            )
+        }
     ) {
 
         Column(
@@ -163,16 +173,6 @@ fun MessageInput(
                 .padding(top = 4.dp, bottom = 4.dp, start = 8.dp)
                 .fillMaxWidth()
                 .weight(1f),
-            trailingIcon = {
-                AnimatedVisibility(visible = userMessage.value.trim().isEmpty()) {
-                    IconButton(
-                        onClick = {
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Outlined.AddAPhoto, contentDescription = null)
-                    }
-                }
-            },
             colors =  TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
@@ -214,7 +214,7 @@ fun MessageInput(
             ) {
 
             Icon(
-                imageVector = if(userMessage.value.trim().isEmpty())Icons.Default.Mic else Icons.Default.Send,
+                imageVector =  Icons.AutoMirrored.Filled.Send,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier
@@ -322,7 +322,8 @@ fun ChatBubbleItem(message: ChatMessage, onLongPressed: () -> Unit) {
                     BoxWithConstraints {
                         Card(
                             shape = MaterialTheme.shapes.large,
-                            modifier = Modifier.widthIn(0.dp, maxWidth * 0.9f),
+                            modifier = Modifier
+                                .widthIn(0.dp, maxWidth * 0.9f),
                             colors = CardDefaults.cardColors(
                                 containerColor = if (isBotMessage) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary,
                             )

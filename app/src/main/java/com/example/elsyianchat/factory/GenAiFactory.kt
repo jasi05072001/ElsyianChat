@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.elsyianchat.BuildConfig
 import com.example.elsyianchat.viewModel.ChatViewModel
+import com.example.elsyianchat.viewModel.PhotoReasoningViewModel
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.generationConfig
 
@@ -19,14 +20,14 @@ val GenerativeViewModelFactory = object : ViewModelProvider.Factory {
 
         return with(viewModelClass) {
             when {
-//                isAssignableFrom(PhotoReasoningViewModel::class.java) -> {
-//                    val generativeModel = GenerativeModel(
-//                        modelName = "gemini-pro-vision",
-//                        apiKey = BuildConfig.apiKey,
-//                        generationConfig = config
-//                    )
-//                    PhotoReasoningViewModel(generativeModel)
-//                }
+                isAssignableFrom(PhotoReasoningViewModel::class.java) -> {
+                    val generativeModel = GenerativeModel(
+                        modelName = "gemini-pro-vision",
+                        apiKey = BuildConfig.api_key,
+                        generationConfig = config
+                    )
+                    PhotoReasoningViewModel(generativeModel)
+                }
 
                 isAssignableFrom(ChatViewModel::class.java) -> {
                     val generativeModel = GenerativeModel(

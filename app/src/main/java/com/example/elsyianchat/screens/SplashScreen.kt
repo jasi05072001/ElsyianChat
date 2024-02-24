@@ -46,7 +46,7 @@ fun SplashScreen(navController: NavHostController) {
         val navOptions = NavOptions.Builder()
             .setPopUpTo(Screens.SplashScreen.route, inclusive = true)
             .build()
-        navController.navigate(Screens.ChatScreen.route, navOptions)
+        navController.navigate(Screens.ChoiceScreen.route, navOptions)
 
 
     }
@@ -67,7 +67,7 @@ fun SplashScreen(navController: NavHostController) {
         )
 
         Text(
-            text = "Elsyian Chat",
+            text = "Elsyian AI",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSecondary,
             fontFamily = inter,
